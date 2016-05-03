@@ -483,7 +483,7 @@
 
 
 
-
+    <script src="cordova.js"></script>
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootcards/1.1.2/js/bootcards.min.js"></script>
@@ -527,9 +527,10 @@ $(function(){
 
                     for(idx in data.entries) {
                       var entry = data.entries[idx];
+                      var displaytime = formatDate(entry.time);
 
                       var item = tmpl.replace("{{icon}}", getIconClass(entry.type));
-                      item = item.replace("{{time}}", entry.time);
+                      item = item.replace("{{time}}", displaytime);
                       item = item.replace("{{title}}", entry.title);
                       item = item.replace("{{desc}}", entry.description);
                       list.append(item);
@@ -554,6 +555,23 @@ $(function(){
           }
 
           return icons[type];
+      }
+
+      var formatDate = function(datetime) {
+
+        var date = new Date(datetime);
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+
+
+        //return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+
+        return strTime;
       }
 
       $(window).hashchange( function(){

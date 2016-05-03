@@ -1,40 +1,698 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google" value="notranslate">
 
-    http://www.apache.org/licenses/LICENSE-2.0
+  <title>Everyday Log</title>
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/bootcards/1.1.1/css/bootcards-ios.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+
+
+<!--  
+  <link href="./css/clockpicker.css" rel="stylesheet" />
+  <link href="./css/monthly.css" rel="stylesheet" />
 -->
-<html>
-    <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap:; style-src 'self' 'unsafe-inline'; media-src *">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
+
+  <style>
+
+    .app-panel {
+      padding-top: 40px;
+    }
+
+    .app-cell-padding {
+      padding: 12px;
+    }
+
+    select {
+        color: #8f8f94;
+    }
+
+    .btn-logit {
+      background-color: #5cb85c;
+      border-color: #4cae4c;
+      color: #fff;
+    }
+
+    #logit-control {
+      position: fixed;
+      bottom: 100px;
+    }
+
+  </style>
+
+
+<script type="text/javascript">
+  (function(e,t){var n=e.amplitude||{};var r=t.createElement("script");r.type="text/javascript";
+  r.async=true;r.src="https://d24n15hnbwhuhn.cloudfront.net/libs/amplitude-2.9.0-min.gz.js";
+  r.onload=function(){e.amplitude.runQueuedFunctions()};var s=t.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(r,s);var i=function(){this._q=[];return this};function a(e){
+  i.prototype[e]=function(){this._q.push([e].concat(Array.prototype.slice.call(arguments,0)));
+  return this}}var o=["add","append","clearAll","set","setOnce","unset"];for(var c=0;c<o.length;c++){
+  a(o[c])}n.Identify=i;n._q=[];function u(e){n[e]=function(){n._q.push([e].concat(Array.prototype.slice.call(arguments,0)));
+  }}var l=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties"];
+  for(var p=0;p<l.length;p++){u(l[p])}e.amplitude=n})(window,document);
+
+  amplitude.init("8251781885e923cb5e68c79d924b9030");
+</script>
+
+
+
+</head>
+
+<body>
+
+  <!-- fixed top navbar -->
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <!-- menu button to show/ hide the off canvas menu -->
+      <button type="button" class="btn btn-default btn-menu navbar-left pull-left" data-toggle="offcanvas">
+        <i class="fa fa-lg fa-bars"></i>
+      </button>
+
+      <a class="navbar-brand" title="Everyday Log" href="#home">Everyday Log</a>  
+
+
+
+      <!--navbar menu options: shown on desktop only -->
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#food">
+              <i class="fa fa-cutlery" title="Food"></i> Food
+            </a>
+          </li>
+          <li>
+            <a href="#water">
+              <i class="fa fa-tint" title="Water"></i> Water
+            </a>
+          </li>
+          <li>
+            <a href="#activity">
+              <i class="fa fa-smile-o"  title="activity"></i> Activity
+            </a>
+          </li>
+          <li >
+            <a href="#report">
+              <i class="fa fa-bar-chart" aria-hidden="true" title="Report"></i> Report
+            </a>
+          </li>
+        </ul>
+      </div>          
+    </div>
+  </div>   
+
+  <!-- slide in off canvas menu (mobile only) -->
+  <nav class="navmenu offcanvas offcanvas-left">
+    <ul class="nav">
+      <li>
+        <a href="#food">
+          <i class="fa fa-fw fa-cutlery" aria-hidden="true" title="Food"></i>Food
+        </a>
+      </li>
+      <li>
+        <a href="#water">
+          <i class="fa fa-fw fa-tint" aria-hidden="true" title="Water"></i>Water
+        </a>
+      </li>
+      <li>
+        <a href="#activity">
+          <i class="fa fa-fw fa-smile-o" aria-hidden="true" title="activity"></i>Activity
+        </a>
+      </li>
+      <li>
+        <a href="#report">
+          <i class="fa fa-fw fa-bar-chart" aria-hidden="true" title="Report"></i>Report
+        </a>
+      </li>
+      <li>
+        <a href="#settings">
+          <i class="fa fa-fw fa-cog" aria-hidden="true" title="Settings"></i>Settings
+        </a>
+      </li>
+
+    </ul>
+
+  </nav><!--nav-->
+
+
+
+
+  <div data-section-id="home" class="container bootcards-container push-right">
+    <div class="row">
+        <div class="container">
+        home
+          <select class="selectpicker">
+            <option>Mustard</option>
+            <option>Ketchup</option>
+            <option>Relish</option>
+          </select>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+    </div><!--row-->
+  </div>
+
+
+
+
+
+
+  <!-- FOOD -->
+  <div data-section-id="food" class="container bootcards-container push-right app-panel">
+    
+      <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+          <h3 class="panel-title pull-left">Meals & Food</h3>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" name="food">
+            <div class="form-group app-cell-padding">
+              <div class="col-xs-12">
+                
+                <select class="form-control" type="text" name="title" value="" data-required="true">
+                  <option value="" disabled selected>Meal / Food</option>
+                  <option>Meal - Breakfast</option>
+                  <option>Meal - Lunch</option>
+                  <option>Meal - Dinner</option>
+                  <option>Meal Replacement - Vanilla Shake</option>
+                  <option>Meal Replacement - Chocolate Shake</option>
+                  <option>Meal Replacement - Quest Bar</option>
+                  <option>Meal Replacement - Other</option>
+                  <option>Snack - Vegetables</option>
+                  <option>Snack - Almond Milk</option>
+                  <option>Snack - Other</option>
+                </select>
+                </div>
+              
+            </div>
+            <div class="form-group app-cell-padding">
+              <div class="col-xs-12">
+                <textarea class="form-control" rows="6" name="description" placeholder="Description..."></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    
+  </div><!--section-->
+
+
+
+
+
+
+
+  <div data-section-id="water" class="container bootcards-container push-right app-panel">
+        
+      <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+          <h3 class="panel-title pull-left">Water</h3>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" name="water">
+            <div class="form-group app-cell-padding">
+              <div class="col-xs-12">
+                
+                <input type="hidden" name="title" value="" />
+
+                <select class="form-control" type="text" name="volume" value="" data-required="true">
+                  <option value="" disabled selected>Volume</option>
+                  <option value="6">6oz</option>
+                  <option value="8">8oz (1 cup)</option>
+                  <option value="10">10oz</option>
+                  <option value="12">12oz</option>
+                  <option value="14">14oz</option>
+                  <option value="16">16oz (2 cups)</option>
+                  <option value="18">18oz</option>
+                  <option value="20">20oz</option>
+                  <option value="22">22oz</option>
+                  <option value="24">24oz (3 cups)</option>
+                </select>
+                </div>
+              
+            </div>
+            <div class="form-group app-cell-padding">
+              <div class="col-xs-12">
+                <textarea class="form-control" rows="6" name="description" placeholder="Description..."></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+  </div><!--section-->
+
+
+
+
+
+
+  <div data-section-id="activity" class="container bootcards-container push-right app-panel">
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+          <h3 class="panel-title pull-left">Activity & Mood</h3>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" name="water">
+            <div class="form-group app-cell-padding">
+              <div class="col-xs-12">
+                
+                <input type="hidden" name="title" value="" />
+
+                <select class="form-control" type="text" name="activity" value="" data-required="true">
+                  <option value="" disabled selected>Activity</option>
+                  <option>Sleeping</option>
+                  <option>Walking</option>
+                  <option>Running</option>
+                  <option>Swimming</option>
+                  <option>Isometric Workout</option>
+                  <option>Free-Weight Workout</option>
+                  <option>Sports</option>
+                  <option>Yardwork / Housework</option>
+                </select>
+                </div>
+              
+            </div>
+          
+            <div class="form-group app-cell-padding">
+              <div class="col-xs-12">
+                
+                <select class="form-control" type="text" name="duration" data-required="">
+                  <option value="" disabled selected>Duration</option>
+                  <option value="10">10 min</option>
+                  <option value="15">15 min</option>
+                  <option value="20">20 min</option>
+                  <option value="30">30 min</option>
+                  <option value="40">40 min</option>
+                  <option value="45">45 min</option>
+                  <option value="60">1 hr</option>
+                  <option value="75">1 hr 15 min</option>
+                  <option value="90">1 hr 30 min</option>
+                  <option value="105">1 hr 45 min</option>
+                  <option value="120">2 hr</option>
+                  <option value="360">6 hr</option>
+                  <option value="390">6 hr 30 min</option>
+                  <option value="420">7 hr</option>
+                  <option value="435">7 hr 15 min</option>
+                  <option value="450">7 hr 30 min</option>
+                  <option value="465">7 hr 45 min</option>
+                  <option value="480">8 hr</option>
+                  <option value="495">8 hr 15 min</option>
+                  <option value="510">8 hr 30 min</option>
+                  <option value="525">8 hr 45 min</option>
+                  <option value="540">9 hr</option>
+                  <option value="555">9 hr 15 min</option>
+                  <option value="570">9 hr 30 min</option>
+                  <option value="585">9 hr 45 min</option>
+                </select>
+                </div>
+              
+            </div>
+
+            <div class="form-group app-cell-padding">
+              <div class="col-xs-12">
+                
+                <select class="form-control" type="text" name="intensity" value="">
+                  <option value="" disabled selected>Intensity / Quality</option>
+                  <option data-label="intesity">Low</option>
+                  <option data-label="intesity">Moderate</option>
+                  <option data-label="intesity">High</option>
+                  <option data-label="quality">Poor</option>
+                  <option data-label="quality">Fair</option>
+                  <option data-label="quality">Good</option>
+                  <option data-label="quality">Excellent</option>
+                </select>
+                </div>
+              
+            </div>
+
+            <div class="form-group app-cell-padding">
+              <div class="col-xs-12">
+                
+                <select class="form-control" type="text" name="mood" value="" data-required="">
+                  <option value="" disabled selected>Mood</option>
+                  <option>Happy</option>
+                  <option>Sad</option>
+                  <option>Angry</option>
+                  <option>Hungry</option>
+                  <option>Hangry</option>
+                  <option>Tired</option>
+                  <option>Focussed</option>
+                  <option>Foggy</option>
+                </select>
+                </div>
+              
+            </div>
+
+            <div class="form-group app-cell-padding">
+              <div class="col-xs-12">
+                <textarea class="form-control" rows="6" name="description" placeholder="Description..."></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div><!--section-->
+
+
+
+
+
+  <div data-section-id="report" class="container bootcards-container push-right">
+    <div class="row">
+        <div class="container">
+        
+
+<div class="bootcards-list">
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <h3 class="panel-title pull-left">Report</h3>
+    </div>
+    <div class="list-group">
+    </div>
+  </div>
+</div>
+
+
+
+
+        </div>
+    </div><!--row-->
+  </div>
+
+
+
+
+
+
+
+  <div data-section-id="settings" class="container bootcards-container push-right">
+    <div class="row">
+        <div class="container">
+        settings
+        </div>
+    </div><!--row-->
+  </div>
+
+
+
+
+
+
+
+
+<!-- logit bar -->
+<div id="logit-control" class="active">
+  <div class="container">
+
+    <div class="input-group">
+      <span class="input-group-addon btn-calendar"><i class="fa fa-calendar-o" ></i></span>
+      <span class="input-group-addon btn-time"><i class="fa fa-clock-o"></i></span>
+      <span class="btn form-control btn-logit" >Log It!</span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <!-- fixed tabbed footer -->
+  <div class="navbar navbar-default navbar-fixed-bottom">
+
+    <div class="container">
+
+      <div class="bootcards-desktop-footer clearfix">
+        <p class="pull-left">Bootcards</p>
+      </div>
+
+      <div class="btn-group">
+        <a href="#food" class="btn btn-default">
+          <i class="fa fa-cutlery" aria-hidden="true" title="Food"></i>Food
+        </a>
+        <a href="#water" class="btn btn-default">
+          <i class="fa fa-tint" aria-hidden="true" title="Water"></i>Water
+        </a>
+        <a href="#activity" class="btn btn-default">
+          <i class="fa fa-smile-o" aria-hidden="true" title="activity"></i>Activity
+        </a>
+        <a href="#report" class="btn btn-default">
+          <i class="fa fa-bar-chart" aria-hidden="true" title="Report"></i>Report
+        </a>
+      </div>
+    </div>
+
+  </div><!--footer-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="phonegap.js"></script>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootcards/1.1.2/js/bootcards.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.3/fastclick.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <script src="./js/jquery.ba-hashchange.js"></script>
+
+<!--    
+    <script src="./js/clockpicker.js"></script>
+    <script src="./js/monthly.js"></script>
+-->
+
+    <script type="text/javascript">
+
+
+
+
+
+$(function(){
+
+      var app = {};
+      app.log = function(msg,level) {
+        console.log(msg);
+      }
+
+      var dailylogUser = "abc123";
+
+
+      var loadReport = function(date) {
+
+          var tmpl = '<a class="list-group-item"><div class="row"><div class="col-xs-12"><i class="fa fa-2x {{icon}} pull-left"></i><h4 class="list-group-item-heading">{{time}}</h4><p class="list-group-item-text">{{title}}</p><p class="list-group-item-text expand-text">{{desc}}</p></div></div></a>';
+
+          $.ajax({
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function(data){
+                    var list = $("div[data-section-id='report']").find(".list-group");
+
+                    // clear previous results
+                    list.html("");
+
+                    for(idx in data.entries) {
+                      var entry = data.entries[idx];
+
+                      var item = tmpl.replace("{{icon}}", getIconClass(entry.type));
+                      item = item.replace("{{time}}", entry.time);
+                      item = item.replace("{{title}}", entry.title);
+                      item = item.replace("{{desc}}", entry.description);
+                      list.append(item);
+
+                    }
+                },
+                error: function(){
+                    console.log("Device control failed");
+                },
+                processData: false,
+                type: 'GET',
+                url: 'http://ws.everydaylog.loc/report/'+ dailylogUser +'/2016-05-02'
+              });
+      };
+
+      var getIconClass = function(type) {
+          var icons = {
+            "food": "fa-cutlery",
+            "water": "fa-tint",
+            "activity": "fa-smile-o",
+            "report": "fa-bar-chart",
+          }
+
+          return icons[type];
+      }
+
+      $(window).hashchange( function(){
+          
+          var hash = location.hash;
+          $("a[href^='#']").each(function(){
+              var that = $(this);
+              var parent = that.closest("li");
+              that[ that.attr( 'href' ) === hash ? 'addClass' : 'removeClass' ]( 'active' );
+              parent[ that.attr( 'href' ) === hash ? 'addClass' : 'removeClass' ]( 'active' );
+          });
+
+          $("div[data-section-id]").each(function(){
+              var that = $(this);
+              that[ that.attr( 'data-section-id' ) !== hash.replace("#","") ? 'addClass' : 'removeClass' ]( 'hidden' );
+          });
+
+
+          // report view
+          if (hash.indexOf("report") > -1) {
+            $("#logit-control").hide();
+            loadReport();
+          }
+          else {
+            $("#logit-control").show();
+          }
+
+      });
+      $(window).hashchange();
+
+      $("button[data-toggle='offcanvas']").click( function(e) {
+          console.log("here");
+      }); 
+
+
+
+
+      bootcards.init( {
+        offCanvasBackdrop : true,
+        offCanvasHideOnMainClick : true,
+        enableTabletPortraitMode : true,
+        disableRubberBanding : true,
+        disableBreakoutSelector : 'a.no-break-out'
+      });
+
+      //enable FastClick
+      window.addEventListener('load', function() {
+          FastClick.attach(document.body);
+      }, false);
+
+      //activate the sub-menu options in the offcanvas menu
+      $('.collapse').collapse();
+
+    
+      $(".btn-logit").click(function(){
+
+          var entry = {user: dailylogUser, type: location.hash.replace("#",""), time: new Date().toLocaleString()};
+
+          var $panel = $(".app-panel").not(".hidden");
+          var $inputs = $panel.find("form :input"); 
+
+          if ($inputs.length > 0) {
+            $inputs.each(function(){
+              entry[$(this).attr("name")] = $(this).val();
+            });
+          }
+
+          if (entry.type != "") {
+              $.ajax({
+                contentType: 'application/json',
+                data: JSON.stringify(entry),
+                dataType: 'json',
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(){
+                    console.log("Device control failed");
+                },
+                processData: false,
+                type: 'POST',
+                url: 'http://ws.everydaylog.loc/event/log'
+              });
+          } 
+
+      });
+
+      $(".btn-time").click(function(){
+          //amplitude.logEvent("app.update.time");
+alert("clicked");
+
+      });
+
+      $(".btn-calendar").click(function(){
+          //amplitude.logEvent("app.update.date");
+alert("clicked");
+
+      });
+
+
+      $(document).ready(function(){
+          amplitude.setUserId(dailylogUser);
+          amplitude.logEvent("app.loaded");
+      });
+      
+
+
+      /// select list titles
+      $("div[data-section-id='water']").find("select[name='volume']").on("change", function(e){
+          var title = $("div[data-section-id='water']").find("input[name='title']").val( e.currentTarget.value +"oz" );
+      })
+
+      $("div[data-section-id='activity']").find("select").on("change", function(e){
+          
+          var $panel = $("div[data-section-id='activity']");
+          var title = "";
+
+          if ($panel.find("select[name='activity']").val() != null) {
+            title += $panel.find("select[name='activity'] option:selected").text() +" ";
+          }
+          
+          if ($panel.find("select[name='duration']").val() != null) {
+            title += "for "+ $panel.find("select[name='duration'] option:selected").text() +" ";
+          }
+
+          if ($panel.find("select[name='intensity']").val() != null) {  
+            var label = $panel.find("select[name='intensity'] option:selected").attr("data-label");    
+            title += "at "+ $panel.find("select[name='intensity'] option:selected").text() +" "+ label +" ";
+          }
+
+          if ($panel.find("select[name='mood']").val() != null) {
+            title += "feeling "+ $panel.find("select[name='mood'] option:selected").text();
+          }
+
+          $panel.find("input[name='title']").val(title);
+      })
+      
+      
+
+});
+    </script>
+  </body>
 </html>
