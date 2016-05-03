@@ -2,7 +2,7 @@
 
 require dirname(__FILE__) .'/../vendor/autoload.php';
 
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'edl-rds-master.cspq5bemq759.us-east-1.rds.amazonaws.com:3306');
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -76,5 +76,5 @@ $app->run();
 
 
 function getDbo() {
-	return new PDO('mysql:host='. DB_HOST .';dbname=dailylog;charset=utf8', 'dailylogUser', 'dailylogK3y$');
+	return new PDO('mysql:host='. DB_HOST .';dbname=everydaylog;charset=utf8', 'dailylogUser', 'dailylogK3y$');
 }
