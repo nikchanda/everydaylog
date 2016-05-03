@@ -2,7 +2,7 @@
 
 require dirname(__FILE__) .'/../vendor/autoload.php';
 
-define('DB_HOST', 'edl-rds-master.cspq5bemq759.us-east-1.rds.amazonaws.com:3306');
+define('DB_HOST', 'edl-rds-master.cspq5bemq759.us-east-1.rds.amazonaws.com');
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
