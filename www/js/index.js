@@ -297,6 +297,6 @@ $(function(){
       });  
 
 
-      $("#time-selected").attr("disabled",true)
+      $("#time-selected").attr("readonly",true)
 
 });
