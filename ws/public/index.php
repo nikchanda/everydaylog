@@ -47,7 +47,7 @@ $app->post('/event/log', function() use ($app) {
 	$return->success = $success;
 	$return->record = $obj;
 
-	if (!success) {
+	if (!$success) {
 		$return->errors = $errors;
 	}
 	echo json_encode($return);
