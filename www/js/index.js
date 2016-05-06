@@ -296,4 +296,9 @@ $(function(){
         }
       });  
 
+
+      $("#time-selected").click(function(e){
+          e.preventDefault();
+      });
+
 });
