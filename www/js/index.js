@@ -297,6 +297,8 @@ $(function(){
       });  
 
 
-      //$("#time-selected").attr("readonly",true)
+      $("#time-selected").on("focus", function(e){
+          $(this).blur();
+      })
 
 });
