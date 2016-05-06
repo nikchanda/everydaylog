@@ -12,39 +12,8 @@
   <link href="//cdnjs.cloudflare.com/ajax/libs/bootcards/1.1.1/css/bootcards-ios.min.css" rel="stylesheet">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
   <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
-
-
-<!--  
-  <link href="./css/clockpicker.css" rel="stylesheet" />
-  <link href="./css/monthly.css" rel="stylesheet" />
--->
-
-  <style>
-
-    .app-panel {
-      padding-top: 40px;
-    }
-
-    .app-cell-padding {
-      padding: 12px;
-    }
-
-    select {
-        color: #8f8f94;
-    }
-
-    .btn-logit {
-      background-color: #5cb85c;
-      border-color: #4cae4c;
-      color: #fff;
-    }
-
-    #logit-control {
-      position: fixed;
-      bottom: 100px;
-    }
-
-  </style>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.3/jquery.datetimepicker.css" rel="stylesheet"/>
+  <link href="../css/index.css" rel="stylesheet" />
 
 
 <script type="text/javascript">
@@ -96,8 +65,8 @@
             </a>
           </li>
           <li>
-            <a href="#water">
-              <i class="fa fa-tint" title="Water"></i> Water
+            <a href="#fluids">
+              <i class="fa fa-tint" title="Fluids"></i> Fluids
             </a>
           </li>
           <li>
@@ -124,8 +93,8 @@
         </a>
       </li>
       <li>
-        <a href="#water">
-          <i class="fa fa-fw fa-tint" aria-hidden="true" title="Water"></i>Water
+        <a href="#fluids">
+          <i class="fa fa-fw fa-tint" aria-hidden="true" title="Fluids"></i>Fluids
         </a>
       </li>
       <li>
@@ -152,16 +121,12 @@
 
 
   <div data-section-id="home" class="container bootcards-container push-right">
-    <div class="row">
-        <div class="container">
-        home
-          <select class="selectpicker">
-            <option>Mustard</option>
-            <option>Ketchup</option>
-            <option>Relish</option>
-          </select>
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+          <h3 class="panel-title pull-left">Dashboard</h3>
         </div>
-    </div><!--row-->
+
+    </div>    
   </div>
 
 
@@ -215,19 +180,27 @@
 
 
 
-  <div data-section-id="water" class="container bootcards-container push-right app-panel">
+  <div data-section-id="fluids" class="container bootcards-container push-right app-panel">
         
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
-          <h3 class="panel-title pull-left">Water</h3>
+          <h3 class="panel-title pull-left">Fluids</h3>
         </div>
         <div class="modal-body">
-          <form class="form-horizontal" name="water">
+          <form class="form-horizontal" name="Fluids">
+            <div class="form-group app-cell-padding">
+
+              <div class="col-xs-12">
+                <select class="form-control" type="text" name="fluid" value="" data-required="true">
+                  <option>Water</option>
+                  <option>Coffee</option>
+                  <option>Tea</option>
+                </select>
+              </div>
+            </div>
+
             <div class="form-group app-cell-padding">
               <div class="col-xs-12">
-                
-                <input type="hidden" name="title" value="" />
-
                 <select class="form-control" type="text" name="volume" value="" data-required="true">
                   <option value="" disabled selected>Volume</option>
                   <option value="6">6oz</option>
@@ -249,6 +222,7 @@
                 <textarea class="form-control" rows="6" name="description" placeholder="Description..."></textarea>
               </div>
             </div>
+            <input type="hidden" name="title" value="" />
           </form>
         </div>
       </div>
@@ -266,7 +240,7 @@
           <h3 class="panel-title pull-left">Activity & Mood</h3>
         </div>
         <div class="modal-body">
-          <form class="form-horizontal" name="water">
+          <form class="form-horizontal" name="Fluids">
             <div class="form-group app-cell-padding">
               <div class="col-xs-12">
                 
@@ -372,25 +346,22 @@
 
 
   <div data-section-id="report" class="container bootcards-container push-right">
-    <div class="row">
-        <div class="container">
+    <div class="container">
+        <div class="panel-heading input-group clearfix" style="padding: 0;">
+            <span class="input-group-addon btn-date-prev"><i class="fa fa-chevron-circle-left" title="Previous Day"></i></span> 
+            <input type="text" id="report-date" class="form-control text-center datetime-display"/>
+            <span class="input-group-addon btn-date-next"><i class="fa fa-chevron-circle-right" title="Next Day"></i></span> 
+        </div>
         
 
-<div class="bootcards-list">
-  <div class="panel panel-default">
-    <div class="panel-heading clearfix">
-      <h3 class="panel-title pull-left">Report</h3>
-    </div>
-    <div class="list-group">
-    </div>
-  </div>
-</div>
-
-
-
-
+        <div class="bootcards-list">
+          <div class="panel panel-default">
+            <div class="list-group">
+            </div>
+          </div>
         </div>
-    </div><!--row-->
+
+    </div>
   </div>
 
 
@@ -417,11 +388,12 @@
 <!-- logit bar -->
 <div id="logit-control" class="active">
   <div class="container">
-
-    <div class="input-group">
-      <span class="input-group-addon btn-calendar"><i class="fa fa-calendar-o" ></i></span>
-      <span class="input-group-addon btn-time"><i class="fa fa-clock-o"></i></span>
-      <span class="btn form-control btn-logit" >Log It!</span>
+    <div class="panel-heading input-group clearfix">
+      <input type="text" id="time-selected" class="datetime-display form-control" />
+      <span class="input-group-addon btn-time"><i class="fa fa-clock-o" title="Current Time"></i></span> 
+    </div>
+    <div class="input-group col-xs-12 text-center">
+      <button class="btn btn-logit" >Log It!</button>
     </div>
   </div>
 </div>
@@ -435,16 +407,12 @@
 
     <div class="container">
 
-      <div class="bootcards-desktop-footer clearfix">
-        <p class="pull-left">Bootcards</p>
-      </div>
-
       <div class="btn-group">
         <a href="#food" class="btn btn-default">
           <i class="fa fa-cutlery" aria-hidden="true" title="Food"></i>Food
         </a>
-        <a href="#water" class="btn btn-default">
-          <i class="fa fa-tint" aria-hidden="true" title="Water"></i>Water
+        <a href="#fluids" class="btn btn-default">
+          <i class="fa fa-tint" aria-hidden="true" title="Fluids"></i>Fluids
         </a>
         <a href="#activity" class="btn btn-default">
           <i class="fa fa-smile-o" aria-hidden="true" title="activity"></i>Activity
@@ -463,254 +431,15 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script src="cordova.js"></script>
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootcards/1.1.2/js/bootcards.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.3/fastclick.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.3/build/jquery.datetimepicker.full.min.js"></script>
     <script src="./js/jquery.ba-hashchange.js"></script>
-
-<!--    
-    <script src="./js/clockpicker.js"></script>
-    <script src="./js/monthly.js"></script>
--->
-
-    <script type="text/javascript">
-
-
-
-
-
-$(function(){
-
-      var app = {};
-      app.log = function(msg,level) {
-        console.log(msg);
-      }
-
-      var dailylogUser = "abc123";
-
-
-      var loadReport = function(date) {
-
-          var tmpl = '<a class="list-group-item"><div class="row"><div class="col-xs-12"><i class="fa fa-2x {{icon}} pull-left"></i><h4 class="list-group-item-heading">{{time}}</h4><p class="list-group-item-text">{{title}}</p><p class="list-group-item-text expand-text">{{desc}}</p></div></div></a>';
-
-          $.ajax({
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function(data){
-                    var list = $("div[data-section-id='report']").find(".list-group");
-
-                    // clear previous results
-                    list.html("");
-
-                    for(idx in data.entries) {
-                      var entry = data.entries[idx];
-                      var displaytime = formatDate(entry.time);
-
-                      var item = tmpl.replace("{{icon}}", getIconClass(entry.type));
-                      item = item.replace("{{time}}", displaytime);
-                      item = item.replace("{{title}}", entry.title);
-                      item = item.replace("{{desc}}", entry.description);
-                      list.append(item);
-
-                    }
-                },
-                error: function(){
-                    console.log("Device control failed");
-                },
-                processData: false,
-                type: 'GET',
-                url: 'http://ws.everydaylog.com/report/'+ dailylogUser +'/2016-05-02'
-              });
-      };
-
-      var getIconClass = function(type) {
-          var icons = {
-            "food": "fa-cutlery",
-            "water": "fa-tint",
-            "activity": "fa-smile-o",
-            "report": "fa-bar-chart",
-          }
-
-          return icons[type];
-      }
-
-      var formatDate = function(datetime) {
-
-        var date = new Date(datetime);
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0'+minutes : minutes;
-        var strTime = hours + ':' + minutes + ' ' + ampm;
-
-
-        //return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
-
-        return strTime;
-      }
-
-      $(window).hashchange( function(){
-          
-          var hash = location.hash;
-          $("a[href^='#']").each(function(){
-              var that = $(this);
-              var parent = that.closest("li");
-              that[ that.attr( 'href' ) === hash ? 'addClass' : 'removeClass' ]( 'active' );
-              parent[ that.attr( 'href' ) === hash ? 'addClass' : 'removeClass' ]( 'active' );
-          });
-
-          $("div[data-section-id]").each(function(){
-              var that = $(this);
-              that[ that.attr( 'data-section-id' ) !== hash.replace("#","") ? 'addClass' : 'removeClass' ]( 'hidden' );
-          });
-
-
-          // report view
-          if (hash.indexOf("report") > -1) {
-            $("#logit-control").hide();
-            loadReport();
-          }
-          else {
-            $("#logit-control").show();
-          }
-
-      });
-      $(window).hashchange();
-
-      $("button[data-toggle='offcanvas']").click( function(e) {
-          console.log("here");
-      }); 
-
-
-
-
-      bootcards.init( {
-        offCanvasBackdrop : true,
-        offCanvasHideOnMainClick : true,
-        enableTabletPortraitMode : true,
-        disableRubberBanding : true,
-        disableBreakoutSelector : 'a.no-break-out'
-      });
-
-      //enable FastClick
-      window.addEventListener('load', function() {
-          FastClick.attach(document.body);
-      }, false);
-
-      //activate the sub-menu options in the offcanvas menu
-      $('.collapse').collapse();
-
-    
-      $(".btn-logit").click(function(){
-
-          var entry = {user: dailylogUser, type: location.hash.replace("#",""), time: new Date().toLocaleString()};
-
-          var $panel = $(".app-panel").not(".hidden");
-          var $inputs = $panel.find("form :input"); 
-
-          if ($inputs.length > 0) {
-            $inputs.each(function(){
-              entry[$(this).attr("name")] = $(this).val();
-            });
-          }
-
-          if (entry.type != "") {
-              $.ajax({
-                contentType: 'application/json',
-                data: JSON.stringify(entry),
-                dataType: 'json',
-                success: function(data){
-                    console.log(data);
-                },
-                error: function(){
-                    console.log("Device control failed");
-                },
-                processData: false,
-                type: 'POST',
-                url: 'http://ws.everydaylog.com/event/log'
-              });
-          } 
-
-      });
-
-      $(".btn-time").click(function(){
-          //amplitude.logEvent("app.update.time");
-alert("clicked");
-
-      });
-
-      $(".btn-calendar").click(function(){
-          //amplitude.logEvent("app.update.date");
-alert("clicked");
-
-      });
-
-
-      $(document).ready(function(){
-          amplitude.setUserId(dailylogUser);
-          amplitude.logEvent("app.loaded");
-      });
-      
-
-
-      /// select list titles
-      $("div[data-section-id='water']").find("select[name='volume']").on("change", function(e){
-          var title = $("div[data-section-id='water']").find("input[name='title']").val( e.currentTarget.value +"oz" );
-      })
-
-      $("div[data-section-id='activity']").find("select").on("change", function(e){
-          
-          var $panel = $("div[data-section-id='activity']");
-          var title = "";
-
-          if ($panel.find("select[name='activity']").val() != null) {
-            title += $panel.find("select[name='activity'] option:selected").text() +" ";
-          }
-          
-          if ($panel.find("select[name='duration']").val() != null) {
-            title += "for "+ $panel.find("select[name='duration'] option:selected").text() +" ";
-          }
-
-          if ($panel.find("select[name='intensity']").val() != null) {  
-            var label = $panel.find("select[name='intensity'] option:selected").attr("data-label");    
-            title += "at "+ $panel.find("select[name='intensity'] option:selected").text() +" "+ label +" ";
-          }
-
-          if ($panel.find("select[name='mood']").val() != null) {
-            title += "feeling "+ $panel.find("select[name='mood'] option:selected").text();
-          }
-
-          $panel.find("input[name='title']").val(title);
-      })
-      
-      
-
-});
-    </script>
+    <script src="./js/index.js"></script>
   </body>
 </html>

@@ -2,6 +2,7 @@
 
 require dirname(__FILE__) .'/../vendor/autoload.php';
 
+//define('DB_HOST', 'localhost');
 define('DB_HOST', 'edl-rds-master.cspq5bemq759.us-east-1.rds.amazonaws.com');
 
 
@@ -29,16 +30,19 @@ $app->post('/event/log', function() use ($app) {
 	$json = $app->request->getBody();
 	$obj = json_decode($json);
 
-	$datetime = date( "Y-m-d H:m:s", strtotime($obj->time));
-
 	$dbo = getDbo();
-	$query = 'INSERT INTO event VALUES (null,"'. $obj->user .'","'. $datetime.'","'. addslashes($json) .'")';
+	$query = 'INSERT INTO event VALUES (null,"'. $obj->user .'","'. $obj->time .'","'. addslashes($json) .'")';
 	
 	$stmt = $dbo->prepare($query);
 	$result = $stmt->execute();
 
-	$success = $result ? true : false;
-	echo '{"success":'. $success .',"record":'. $json .'}';
+	if ($result) {
+		$obj->id = $dbo->lastInsertId();
+	}
+
+	$errors = $stmt->errorInfo();
+	$success = $errors[0] == "00000" ? 1 : 0;
+	echo '{"success":'. $success .',"record":'. json_encode($obj) .'}';
 });
 
 
@@ -50,7 +54,7 @@ $app->get('/report/:account/:enddate(/:days)', function ($account, $enddate, $da
 	$end = date('Y-m-d 23:59:59', $endtime);
 
 	$dbo = getDbo();
-	$query = 'SELECT id, details FROM event WHERE user = "'. $account .'" AND datetime BETWEEN "'. $start .'" AND "'. $end .'" ORDER BY datetime ASC';
+	$query = 'SELECT id, details FROM event WHERE user = "'. $account .'" AND datetime BETWEEN "'. $start .'" AND "'. $end .'" ORDER BY `datetime` ASC';
 
 	$stmt = $dbo->prepare($query);
 	$stmt->execute();
@@ -65,9 +69,9 @@ $app->get('/report/:account/:enddate(/:days)', function ($account, $enddate, $da
 		}
 	}
 
-	$success = $rows ? true : false;
+	$errors = $stmt->errorInfo();
+	$success = $errors[0] == "00000" ? 1 : 0;
 	echo '{"success":'. $success .',"entries":'. json_encode($entries) .'}';
-
 });
 
 
@@ -76,5 +80,5 @@ $app->run();
 
 
 function getDbo() {
-	return new PDO('mysql:host='. DB_HOST .';dbname=everydaylog;charset=utf8', 'dailylogUser', 'dailylogK3y$');
+	return new PDO('mysql:host='. DB_HOST .';dbname=everydaylog;charset=utf8', 'edlUser', 'edlK3y$');
 }
