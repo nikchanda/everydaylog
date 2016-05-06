@@ -42,7 +42,15 @@ $app->post('/event/log', function() use ($app) {
 
 	$errors = $stmt->errorInfo();
 	$success = $errors[0] == "00000" ? 1 : 0;
-	echo '{"success":'. $success .',"record":'. json_encode($obj) .'}';
+
+	$return = new stdClass();
+	$return->success = $success;
+	$return->record = $obj;
+
+	if (!success) {
+		$return->errors = $errors;
+	}
+	echo json_encode($return);
 });
 
 
