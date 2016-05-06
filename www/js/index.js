@@ -297,8 +297,6 @@ $(function(){
       });  
 
 
-      $("#time-selected").focus(function(e){
-          e.preventDefault();
-      });
+      $("#time-selected").attr("disabled",true)
 
 });
