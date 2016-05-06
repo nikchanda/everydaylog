@@ -297,7 +297,7 @@ $(function(){
       });  
 
 
-      $("#time-selected").click(function(e){
+      $("#time-selected").focus(function(e){
           e.preventDefault();
       });
 
